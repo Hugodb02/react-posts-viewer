@@ -9,6 +9,11 @@ const App = () => {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+
+  const filteredPosts = posts.filter(post =>
+    post.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
+  )
   
   useEffect(() => {
     const fetchPosts = async () => {
@@ -27,14 +32,22 @@ const App = () => {
     fetchPosts()
   }, [])
 
+
+
   return (
     <main>
     <h1>Posts</h1>
+    <input
+      type="text"
+      placeholder="Search posts..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
         <ul>
-          {posts.map(post => (
+          {filteredPosts.map(post => (
             <li key={post.id}>
               <h2>{post.title}</h2>
               <p>{post.body}</p>
