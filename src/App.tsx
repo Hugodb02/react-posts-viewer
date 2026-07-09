@@ -46,6 +46,9 @@ const App = () => {
      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
+        filteredPosts.length === 0 ? (
+          <p>No posts found.</p>
+        ) : (
         <ul>
           {filteredPosts.map(post => (
             <li key={post.id}>
@@ -53,7 +56,7 @@ const App = () => {
               <p>{post.body}</p>
             </li>
           ))}
-        </ul>
+        </ul>)
       )}
     </main>
   )
