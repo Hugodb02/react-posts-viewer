@@ -13,9 +13,6 @@ const App = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)
-      // Fake timeout to simulate loading delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
       try {
         const response = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
         setPosts(response.data)
