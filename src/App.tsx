@@ -7,14 +7,23 @@ import type {Post} from './types'
 const App = () => {
 
   const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
   
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true)
+      // Fake timeout to simulate loading delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       try {
         const response = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
         setPosts(response.data)
       } catch (error) {
+        setError('Error fetching posts')
         console.error('Error fetching posts:', error)
+      }finally {
+      setLoading(false)
       }
     }
 
@@ -24,18 +33,21 @@ const App = () => {
   return (
     <main>
     <h1>Posts</h1>
-    <ul>
-      {posts.map(post => (
-        <li key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
-        </li>
-      ))}
-    </ul>
+     {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      {!loading && !error && (
+        <ul>
+          {posts.map(post => (
+            <li key={post.id}>
+              <h2>{post.title}</h2>
+              <p>{post.body}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
-    
-    
   )
 }
+
 
 export default App
