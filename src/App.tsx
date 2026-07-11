@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type {Post} from './types'
@@ -20,6 +19,7 @@ const App = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       setLoading(true)
+      setError(null)
       try {
         const response = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
         setPosts(response.data)
