@@ -1,6 +1,7 @@
 import type { Post, Comment} from '../types'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import CommentList from './CommentList'
 
 interface PostDetailProps {
 post : Post
@@ -47,13 +48,7 @@ const PostDetail = ({ post, onClose }: PostDetailProps) => {
       comments.length === 0 ? (
         <p>No comments found.</p>
       ) : (
-        <ul>
-          {comments.map(comment => (
-            <li key={comment.id}>
-              {comment.body}
-            </li>
-          ))}
-        </ul>
+        <CommentList comments={comments} />
       )
       )}
     </div>

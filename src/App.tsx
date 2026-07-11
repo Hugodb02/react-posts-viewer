@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type {Post} from './types'
 import PostDetail from './components/PostDetail'
+import SearchBox from './components/SearchBox'
+import PostList from './components/PostList'
 
 
 const App = () => {
@@ -39,12 +41,7 @@ const App = () => {
   return (
     <main>
     <h1>Posts</h1>
-    <input
-      type="text"
-      placeholder="Search posts..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-    />
+    <SearchBox searchTerm={searchTerm} onSearchChange={setSearchTerm} />
      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
@@ -53,14 +50,7 @@ const App = () => {
         ) : filteredPosts.length === 0 ? (
           <p>No posts found.</p>
         ) : (
-          <ul>
-            {filteredPosts.map(post => (
-              <li key={post.id}>
-                {post.title}
-                  <button onClick={() => setSelectedPost(post)}>View</button>
-              </li>
-            ))}
-          </ul>
+          <PostList posts={filteredPosts} onSelectPost={setSelectedPost} />
         )
       )}
     </main>
