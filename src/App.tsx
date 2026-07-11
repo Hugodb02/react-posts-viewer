@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import type {Post} from './types'
+import PostDetail from './components/PostDetail'
 
 
 const App = () => {
@@ -10,8 +11,9 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
 
-  const filteredPosts = posts.filter(post =>
+  const filteredPosts : Post[] = posts.filter(post =>
     post.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
   )
   
@@ -46,17 +48,20 @@ const App = () => {
      {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {!loading && !error && (
-        filteredPosts.length === 0 ? (
+        selectedPost !== null ? (
+          <PostDetail post={selectedPost} onClose={() => setSelectedPost(null)} />
+        ) : filteredPosts.length === 0 ? (
           <p>No posts found.</p>
         ) : (
-        <ul>
-          {filteredPosts.map(post => (
-            <li key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.body}</p>
-            </li>
-          ))}
-        </ul>)
+          <ul>
+            {filteredPosts.map(post => (
+              <li key={post.id}>
+                {post.title}
+                  <button onClick={() => setSelectedPost(post)}>View</button>
+              </li>
+            ))}
+          </ul>
+        )
       )}
     </main>
   )
