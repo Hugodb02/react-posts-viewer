@@ -44,13 +44,9 @@ const PostDetail = ({ post, onClose }: PostDetailProps) => {
       <h3>Comments</h3>
       {loading && <p>Loading comments...</p>}
       {error && <p>{error}</p>}
-      {!loading &&  !error && (
-      comments.length === 0 ? (
-        <p>No comments found.</p>
-      ) : (
+      {!loading &&  !error && 
         <CommentList comments={comments} />
-      )
-      )}
+      }
     </div>
   )
 }
