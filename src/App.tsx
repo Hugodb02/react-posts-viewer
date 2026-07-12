@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import type {Post} from './types'
 import PostDetail from './components/PostDetail'
 import SearchBox from './components/SearchBox'
 import PostList from './components/PostList'
+import { getPosts } from './api'
 
 
 const App = () => {
@@ -23,8 +23,8 @@ const App = () => {
       setLoading(true)
       setError(null)
       try {
-        const response = await axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts')
-        setPosts(response.data)
+        const fetchedPosts = await getPosts()
+        setPosts(fetchedPosts)
       } catch (error) {
         setError('Error fetching posts')
         console.error('Error fetching posts:', error)

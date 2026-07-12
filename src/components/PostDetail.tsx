@@ -1,7 +1,7 @@
 import type { Post, Comment} from '../types'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import CommentList from './CommentList'
+import { getComments } from '../api'
 
 interface PostDetailProps {
 post : Post
@@ -20,8 +20,8 @@ const PostDetail = ({ post, onClose }: PostDetailProps) => {
       setLoading(true)
       setError(null)
       try {
-        const response = await axios.get<Comment[]>(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
-        setComments(response.data)
+        const fetchedComments = await getComments(post.id)
+        setComments(fetchedComments)
       }
       catch (error) {
         setError('Error fetching comments')
