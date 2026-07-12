@@ -47,8 +47,6 @@ const App = () => {
       {!loading && !error && (
         selectedPost !== null ? (
           <PostDetail post={selectedPost} onClose={() => setSelectedPost(null)} />
-        ) : filteredPosts.length === 0 ? (
-          <p>No posts found.</p>
         ) : (
           <PostList posts={filteredPosts} onSelectPost={setSelectedPost} />
         )
