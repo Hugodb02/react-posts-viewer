@@ -24,7 +24,9 @@ const App = () => {
         const fetchedPosts = await getPosts();
         setPosts(fetchedPosts);
       } catch (error) {
-        setError("Error fetching posts");
+        setError(
+          error instanceof Error ? error.message : "Error fetching posts",
+        );
         console.error("Error fetching posts:", error);
       } finally {
         setLoading(false);

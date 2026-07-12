@@ -21,7 +21,9 @@ const PostDetail = ({ post, onClose }: PostDetailProps) => {
         const fetchedComments = await getComments(post.id);
         setComments(fetchedComments);
       } catch (error) {
-        setError("Error fetching comments");
+        setError(
+          error instanceof Error ? error.message : "Error fetching comments",
+        );
         console.error("Error fetching comments:", error);
       } finally {
         setLoading(false);
