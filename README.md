@@ -35,6 +35,6 @@ The app runs on the URL Vite prints (default http://localhost:5173).
 ## Project structure
 
 - `src/api.ts` — API layer (all HTTP calls)
-- `src/types.tsx` — shared TypeScript types
+- `src/types.ts` — shared TypeScript types
 - `src/components/` — SearchBox, PostList, PostDetail, CommentList
 - `src/App.tsx` — top-level state and view switching
